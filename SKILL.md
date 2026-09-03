@@ -1,6 +1,6 @@
 ---
 name: shortsmaker
-description: 사용자가 YouTube 쇼츠 대본 제작을 요청하고 쇼츠 내용과 목표 길이를 모두 제공했을 때 강한 오프닝이 있는 씬별 나레이션·Google Flow 프롬프트·씬 이미지·YouTube 제목과 설명을 구성한다. 참고 영상 URL은 선택사항이다. 썸네일 문구 5개를 먼저 제안하고 사용자가 번호로 고른 문구로 완성 썸네일 1장만 만든다. 일반 영상 분석, 쇼츠 대본과 무관한 요청, 필수 정보가 빠진 요청에는 제작을 시작하지 않는다.
+description: 사용자가 YouTube 쇼츠 대본 제작을 요청하고 쇼츠 내용과 목표 길이를 모두 제공했을 때 강한 오프닝이 있는 씬별 나레이션·Google Flow 프롬프트·씬 이미지·YouTube 제목과 설명을 구성한다. 참고 영상 URL은 선택사항이다. 썸네일 문구 5개를 먼저 제안하고 사용자가 번호로 고른 문구를 정확한 한글 타이포그래피로 합성해 1080×1920 완성 썸네일 1장만 만든다. 일반 영상 분석, 쇼츠 대본과 무관한 요청, 필수 정보가 빠진 요청에는 제작을 시작하지 않는다.
 metadata:
   short-description: 필수 입력 기반 쇼츠 대본·Flow·썸네일 1장
 ---
@@ -114,15 +114,14 @@ python3 <skill-dir>/scripts/create_project.py --title "<주제 기반 작업용 
 
 ## 썸네일 제작 기준
 
-- 문구는 기본 2~3줄로 구성하며 4줄은 불가피할 때만 사용한다.
-- 글자 블록 전체를 이미지 가로 8%~92%, 세로 24%~72% 안에 배치한다.
-- 글자 중심은 피사체에 따라 세로 38%~45% 또는 55%~62%에 둔다.
-- 글자, 외곽선, 그림자 어느 것도 안전영역 밖으로 나가면 안 된다.
-- 굵은 한글 글꼴, 강한 색 대비, 검은 외곽선 또는 그림자를 사용한다.
-- 핵심 피사체를 가리지 않는다. 문구가 길면 글자 크기를 지나치게 줄이지 말고 문구를 짧게 다듬는다.
-- 완성본을 원본 크기와 390px 축소 화면에서 직접 확인한다.
-- 한글 철자, 문장부호, 잘림, 가독성, 비율, 핵심 피사체 보존에 문제가 있으면 수정한다.
-- 최종본은 `thumbnails/01.png`로 저장하고 채팅에 1장만 보여준다.
+- 제목과 선택 문구에서 `HOOK`, `SUBJECT`, `SURPRISE`, `NUMBER`를 찾아 가장 강한 결정적 순간을 대표 이미지로 고른다. 평범한 사물 사진보다 영상의 약속이 즉시 보이는 순간을 우선한다.
+- 참고 이미지가 있으면 우선적인 시각 기준으로 사용한다. 9:16에 맞출 때 비율을 늘여 찌그러뜨리지 말고 crop, outpainting, 배경 확장, 피사체 재배치를 사용하며 핵심 외형을 보존한다.
+- 이미지 생성 도구에는 **텍스트 없는 배경**만 요청한다. 한글 문구를 이미지 생성 AI에 직접 그리게 하지 않는다.
+- 선택 문구는 뜻과 철자·문장부호를 바꾸지 않고 2~4줄로 나눈 뒤 `scripts/render_thumbnail.py`로 별도 합성한다. 숫자를 우선 강조하고 강조색은 2~3개 이하로 제한한다.
+- 최종본은 정확히 1080×1920, 9:16, RGB PNG이며 `thumbnails/01.png` 한 장만 저장한다.
+- 텍스트·외곽선·그림자는 좌우 70px, 상단 120px, 하단 160px 안쪽에 둔다. 메인 문구는 가능하면 세로 15%~50% 구간에 놓고 핵심 피사체를 가리지 않는다.
+- 원본과 임시 270×480 모바일 미리보기에서 철자, 문장부호, 잘림, 대비, 대표 이미지, 피사체 보존을 직접 확인한다. 미리보기는 프로젝트에 저장하지 않는다.
+- 상세 제작법과 실행 명령은 [references/thumbnail-production.md](references/thumbnail-production.md)를 따른다.
 
 ## YouTube 제목과 설명
 
@@ -159,9 +158,10 @@ python3 <skill-dir>/scripts/create_project.py --title "<주제 기반 작업용 
 - 썸네일 문구 후보를 정확히 5개 제안하고 사용자 번호 선택을 기다렸는가
 - 사용자가 번호를 선택하기 전에 썸네일 이미지를 만들지 않았는가
 - 선택한 문구가 들어간 완성 썸네일이 정확히 1장인가
-- 썸네일 글자가 안전영역 안에 있고 원본 및 390px 화면에서 확인됐는가
+- 썸네일이 1080×1920 RGB PNG이고 글자가 안전영역 안에 있으며 원본 및 270×480 화면에서 확인됐는가
+- 배경 이미지에 AI 생성 글자가 없고 선택 문구를 별도 합성해 한글 철자와 문장부호가 정확한가
 - 최종 보고 가장 위에 모든 씬 나레이션과 Flow 프롬프트를 다시 출력했는가
 - YouTube 제목과 설명이 각각 별도 `text` 코드블록인가
 - 저장 파일이 `script.txt`, 씬별 이미지 1장, `thumbnails/01.png`뿐인가
 
-참고 영상 분석 세부 기준이 필요하면 [references/reference-analysis.md](references/reference-analysis.md), 저장 계약은 [references/output-contract.md](references/output-contract.md), 단계별 실행은 [references/workflow.md](references/workflow.md), 제목·설명·썸네일 규칙은 [references/publishing.md](references/publishing.md)를 따른다.
+참고 영상 분석 세부 기준이 필요하면 [references/reference-analysis.md](references/reference-analysis.md), 저장 계약은 [references/output-contract.md](references/output-contract.md), 단계별 실행은 [references/workflow.md](references/workflow.md), 제목·설명 규칙은 [references/publishing.md](references/publishing.md), 썸네일 제작은 [references/thumbnail-production.md](references/thumbnail-production.md)를 따른다.

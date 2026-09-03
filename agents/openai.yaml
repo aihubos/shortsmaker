@@ -1,6 +1,6 @@
 interface:
   display_name: "ShortsMaker"
-  short_description: "필수 입력 기반 대본·Flow·썸네일 1장"
-  default_prompt: "Use $shortsmaker only to create a YouTube Shorts script package. Require my topic and target duration before starting; a reference-video URL is optional. Put Scene NN: as the first line inside every Flow prompt. After the scene assets, offer five numbered thumbnail phrases and wait for my number before generating one final thumbnail."
+  short_description: "대본·Flow·1080×1920 한글 썸네일"
+  default_prompt: "Use $shortsmaker only to create a YouTube Shorts script package. Require my topic and target duration before starting; a reference-video URL is optional. Put Scene NN: as the first line inside every Flow prompt. After the scene assets, offer five numbered thumbnail phrases and wait for my number. Generate a text-free background, then composite the selected Korean copy separately into one exact 1080×1920 thumbnail and verify it at 270×480."
 policy:
   allow_implicit_invocation: true
