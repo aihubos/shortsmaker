@@ -1,6 +1,6 @@
 interface:
   display_name: "ShortsMaker"
-  short_description: "대본·Flow·글자 포함 썸네일 3종 자동 완성"
-  default_prompt: "Use $shortsmaker to create the complete Shorts package, including scene narration, Flow prompts, scene images, three safe-zone text thumbnails, and one final YouTube title and description without asking me to choose."
+  short_description: "필수 입력 기반 대본·Flow·썸네일 1장"
+  default_prompt: "Use $shortsmaker only to create a YouTube Shorts script package. Require my topic, reference-video URL, and target duration before starting. Put Scene NN: as the first line inside every Flow prompt. After the scene assets, offer five numbered thumbnail phrases and wait for my number before generating one final thumbnail."
 policy:
   allow_implicit_invocation: true
